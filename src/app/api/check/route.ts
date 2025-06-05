@@ -13,8 +13,8 @@ export async function POST(request: Request) {
     const fo = new FileOperator(file);
 
     await fo.store()
-    await fo.extractRandomPhrases()
-
+    const randomPhrases = await fo.extractRandomPhrases()
+    // continue here
     return NextResponse.json({
         success: true,
         message: "File successfully processed.",
