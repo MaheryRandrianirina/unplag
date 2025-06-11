@@ -8,7 +8,8 @@ RUN if [ "$NODE_ENV" = "production" ]; then \
     else \
         npm install; \
     fi
-COPY . ./
+COPY . .
+RUN echo "packages installed"
 EXPOSE $PORT
 CMD if [ "$NODE_ENV" = "production" ]; then \
         npm run start; \
