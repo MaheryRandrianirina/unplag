@@ -1,4 +1,6 @@
 import { FileOperator } from "@/lib/FileOperator";
+import { NLP } from "@/lib/NLP";
+import { Plagiarism } from "@/lib/Plagiarism";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -10,11 +12,9 @@ export async function POST(request: Request) {
       return new Response("No file uploaded", { status: 400 });
     }
     
-    const fo = new FileOperator(file);
-
-    await fo.store()
-    const randomPhrases = await fo.extractRandomPhrases()
-    // continue here
+    const result = await (new Plagiarism()).check(file)
+    
+    
     return NextResponse.json({
         success: true,
         message: "File successfully processed.",
