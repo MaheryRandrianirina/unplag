@@ -8,6 +8,7 @@ export class Plagiarism {
         const randomPhrases = await fo.extractRandomPhrases();
         
         const nlp = new NLP(randomPhrases);
-        const lemmaPhrases = nlp.lemmatize();
+        const lemmaPhrases = nlp.prepare();
+        console.log(lemmaPhrases)
     }
 }

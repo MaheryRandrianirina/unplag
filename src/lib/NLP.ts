@@ -14,12 +14,14 @@ export class NLP {
         }
     }
 
-    lemmatize() {
+    prepare() {
+        // lemma and normalize
         this.text = this.text.map(sentence => {
             const doc = this.language === "eng" ? nlp(sentence) : nlpFr(sentence);
             doc.compute("root")
             
-            return doc.terms().json().map((item: any) => ( item.terms[0].root || item.terms[0].normal)).join(" ")
+            const lemma = doc.terms().json().map((item: any) => ( item.terms[0].root || item.terms[0].normal)).join(" ");
+            return normalize(lemma)
         });
 
         return this.text;
