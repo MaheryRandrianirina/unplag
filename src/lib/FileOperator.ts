@@ -3,11 +3,14 @@ import { writeFile, readFile } from "fs/promises";
 import path from "path";
 
 export class FileOperator {
-    private filePath: string = "";
 
-    constructor(private file: File) {}
+    constructor(private file: File|null = null, private filePath: string = "") {}
 
     async store(): Promise<void> {
+        if (!this.file){
+            throw new Error("There is no file");
+        }
+
         const bytes = await this.file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         this.filePath = path.join(process.cwd(), "storage", `${Date.now()}${this.file.name}`);
@@ -29,8 +32,8 @@ export class FileOperator {
 
         if(existsSync(this.filePath)) {
             const content = await readFile(this.filePath, "utf8");
-            const phrases = content.split(".");
-
+            const phrases = content.split(".").filter(phrase => phrase.trim() !== "");
+            
             //randomly select 10% of the phrases
             const extractedPhrases = new Map<number, string>();
             
