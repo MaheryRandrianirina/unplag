@@ -27,7 +27,6 @@ export async function googleSearch(query: string) {
       location: "United States",
     })
     
-    console.log(responseJson["organic_results"]);
     return responseJson["organic_results"];
   }catch(e){
     console.error("Error during Google search:", e);
@@ -35,29 +34,3 @@ export async function googleSearch(query: string) {
   }
 }
 
-function getRandomAgent(): string {
-  const agents = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
-  ];
-
-  return agents[Math.floor(Math.random() * agents.length)];
-}
-
-function parse(html: string) {
-  return new Promise<ChildNode[]>((resolve, reject) => {
-    const handler = new DomHandler((error, dom) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(dom);
-      }
-    });
-
-    const parser = new Parser(handler, { decodeEntities: true });
-    parser.write(html);
-    parser.end();
-  });
-}

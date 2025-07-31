@@ -21,6 +21,7 @@ export class FileOperator {
             }
 
             await writeFile(this.filePath, buffer);
+            
         }catch(e) {
             console.error("Error writing file:", e);
             throw new Error("Failed to store the file.");
